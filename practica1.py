@@ -76,9 +76,9 @@ class practice1App(webapp.webApp):
 				
 			elif method == 'POST':
 				body = petition.split('\r\n\r\n', 1)[1]
-			
-				if body.find("URL=None") != -1 or not body: # el or para el caso de POSTER sin nada en el body
-					response = send_response('501', PRACTICE_NAME + "Server error in form")
+								 
+				if body == "URL=None" or body.find("URL=") == -1:
+					response = send_response('501', PRACTICE_NAME + "<h2><center>Server error in form!</center></h2>")
 				else:
 					_, url = body.split('=')
 					# To convert the replace(%3A and %2F ...) in the url. 
@@ -101,7 +101,6 @@ class practice1App(webapp.webApp):
 		
 		"""Returns the HTTP code for the reply, and an HTML page."""
 		print(origi_URL_dic, simpli_URL_dic)
-	
 		return response
 
 if __name__ == "__main__":
