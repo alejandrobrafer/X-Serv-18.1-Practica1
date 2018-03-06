@@ -2,36 +2,36 @@
 
 """
 Práctica 1: Objetivo la creación de una aplicación web simple para
-acortar URLs
+acortar URLs.
 """
 
 import webapp
 from urllib.parse import unquote
 
 PREFIX = 'http://'
+PRACTICE_NAME = "<html><head><title>URL shortener~SARO_2018</title></head></html>"
+
 
 origi_URL_dic = {}
 simpli_URL_dic = {}
 
 def redirector(url):
-	return ("<html><head><title>Redirigir al navegador a otra URL</title>" +
+	return ("<html><head><title>URL shortener~SARO_2018</title>" +
 	"<META HTTP-EQUIV='REFRESH' CONTENT='5;URL=" + str(url) + "'>" +
-	"</head><body>Esta página cambia en 5 segundos por la portada de DesarrolloWeb.com</body></html>")
+	"</head><body>Redirecting in 5 seconds ...</body></html>")
 
 form = """
 <html>
-<head><title>SHORTEN URL~SARO_2018</title></head>
+<head><title>URL shortener~SARO_2018</title></head>
 <body>
- 
-<h3>Simplify your links</h3>
- 
+<h1><font color="Blue"><center>Welcome to the URL shortener!</center></font></h1>
 <form action="" method="POST">
-  Your original URL here:
-  <input type="text" name="URL" value="None"/>
-  <br/>
-  <input type="submit" value="SHORTEN URL" />
+Your original URL here:
+<input type="text" name="URL" value="None"/>
+<br/>
+<input type="submit" value="SHORTEN URL"/>
 </form>
-  <br/>
+<br/>
 <h4>We currently have the following shortened URLs:</h4>
 </body>
 </html>
@@ -78,7 +78,7 @@ class practice1App(webapp.webApp):
 				body = petition.split('\r\n\r\n', 1)[1]
 			
 				if body.find("URL=None") != -1 or not body: # el or para el caso de POSTER sin nada en el body
-					response = send_response('501', "Server error in form")
+					response = send_response('501', PRACTICE_NAME + "Server error in form")
 				else:
 					_, url = body.split('=')
 					# To convert the replace(%3A and %2F ...) in the url. 
@@ -92,14 +92,16 @@ class practice1App(webapp.webApp):
 						origi_URL_dic[len(origi_URL_dic)] = url
 						simpli_URL_dic[url] = len(origi_URL_dic) - 1
 						
-					link = ("<a href='//localhost:1234/" + str(simpli_URL_dic[url]) + "'>Your shortened URL</a>" +
-							"<br><a href='" + str(origi_URL_dic[simpli_URL_dic[url]]) + "'>Your original URL</a>")
-					response = send_response('200', link)
+					link = ("<h1><font color='Blue'><center>Choose one</center></font></h1>" +
+							"<h4>Your shortened URL: <a href='//localhost:1234/" + str(simpli_URL_dic[url]) + "'>http://localhost:1234/" + str(simpli_URL_dic[url]) + "</a>" +
+							"<br>Your original URL: <a href='" + str(origi_URL_dic[simpli_URL_dic[url]]) + "'>" + str(origi_URL_dic[simpli_URL_dic[url]]) + "</a></h4>")
+					response = send_response('200', PRACTICE_NAME + link)
 			else:
-				response = send_response('404', "Resource Not Found!")
+				response = send_response('404', PRACTICE_NAME + "Resource Not Found!")
 		
 		"""Returns the HTTP code for the reply, and an HTML page."""
 		print(origi_URL_dic, simpli_URL_dic)
+	
 		return response
 
 if __name__ == "__main__":
