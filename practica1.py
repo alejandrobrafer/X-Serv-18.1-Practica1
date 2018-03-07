@@ -89,7 +89,8 @@ class practice1App(webapp.webApp):
 					links = ("<h2><font color='Blue'>Choose one:</font></h2>" +
 							"<h4>Your shortened URL: <a href='//" + str(machine) + ":" + str(port) + str(simpli_URL_dic[url]) +
 							"'>http://" + str(machine)+ ":" + str(port) + str(simpli_URL_dic[url]) + "</a>" +
-							"<br>Your original URL: <a href='" + str(origi_URL_dic[simpli_URL_dic[url]]) + "'>" + str(origi_URL_dic[simpli_URL_dic[url]]) + "</a></h4>")
+							"<br>Your original URL: <a href='" + str(origi_URL_dic[simpli_URL_dic[url]]) + "'>" + 
+							str(origi_URL_dic[simpli_URL_dic[url]]) + "</a></h4>")
 					response = send_response('200', links)
 			else:
 				response = send_response('501', "<center>Service not implemented on this server.</center>")
