@@ -1,5 +1,4 @@
 #!/usr/bin/python3
-
 """
 Práctica 1: Objetivo la creación de una aplicación web simple para
 acortar URLs.
@@ -7,13 +6,50 @@ acortar URLs.
 
 import webapp
 from urllib.parse import unquote
+import csv
 
 PREFIX = 'http://'
 PRACTICE_NAME = "<head><title>URL shortener~SARO_2018</title></head>"
+DICTIONARY_NAME = 'dictionary.csv'
+
 port = 1234
 machine = "localhost"
 origi_URL_dic = {}
 simpli_URL_dic = {}
+
+def read_date(fich):
+	with open(fich, newline='') as csvfile:
+		lines = csv.reader(csvfile, delimiter=' ', quotechar='|')
+		for line in lines:
+			text = (', '.join(line))
+		dates = text[1:-1].split(', ')	
+		print(dates)
+	return dates
+
+def update_dictionary(opt, text):
+	dictionary = {}
+	if text != None:
+		print(text)	
+		for lineas in text:
+			dirty_key, dirty_value = lineas.split(": ")
+			key = dirty_key.split("'")[1]
+			value = dirty_value.split("'")[1]
+			if opt == "Active":
+				aux = key
+				key = value
+				value = aux 
+			print("key")
+			print(key)
+			print("value")
+			print(value)
+			dictionary[key] = value
+	return dictionary
+	
+def write_date(fich, dic):
+	f = open(fich, 'w')
+	obj = csv.writer(f, delimiter=' ', quotechar='|', quoting=csv.QUOTE_MINIMAL) 
+	obj.writerow([dic])
+	f.close()
 
 def router(url):
 	return ("<html>" + PRACTICE_NAME + "<head><META HTTP-EQUIV='REFRESH' CONTENT='5;URL=" + str(url) + "'>" +
@@ -36,6 +72,16 @@ def send_response(Code, Body):
 
 class practice1App(webapp.webApp):
 	
+	def __init__(self, hostname, port):
+		print("apertura de fichero")
+		try:
+			old_dic = read_date(DICTIONARY_NAME)
+		except UnicodeDecodeError:
+			old_dic = None
+		self.origi_URL_dic = update_dictionary(None, old_dic)
+		self.simpli_URL_dic = update_dictionary("Active", old_dic)
+		super().__init__(hostname, port)
+	
 	def parse(self, request):
 		"""Parse the received request, extracting the relevant information."""
 		# request.split()[0] == metodo (GET, POST...)
@@ -55,14 +101,14 @@ class practice1App(webapp.webApp):
 			method, resource, petition = parsedRequest
 
 			if method == 'GET' and resource == '/':
-				response = send_response('200', form + str(origi_URL_dic))
+				response = send_response('200', form + str(self.origi_URL_dic))
 			
 			elif method == 'GET':
 				num = resource.split('/')[1]
 				key = "/" + num
 				
-				if key in origi_URL_dic:
-					response = ('302 Found', router(origi_URL_dic[key]))
+				if key in self.origi_URL_dic:
+					response = ('302 Found', router(self.origi_URL_dic[key]))
 				else:
 					response = send_response('404', "<center>Resource Not Found!</center>")
 				
@@ -82,21 +128,22 @@ class practice1App(webapp.webApp):
 						url = PREFIX + url
 					
 					# I search if the URL isn't in the dictionary
-					if not url in simpli_URL_dic:
-						origi_URL_dic["/" + str(len(origi_URL_dic))] = url
-						simpli_URL_dic[url] = ("/" + str(len(origi_URL_dic) - 1))
-						
+					if not url in self.simpli_URL_dic:
+						self.origi_URL_dic["/" + str(len(self.origi_URL_dic))] = url
+						self.simpli_URL_dic[url] = ("/" + str(len(self.origi_URL_dic) - 1))
+						write_date(DICTIONARY_NAME, self.origi_URL_dic)	
+
 					links = ("<h2><font color='Blue'>Choose one:</font></h2>" +
-							"<h4>Your shortened URL: <a href='//" + str(machine) + ":" + str(port) + str(simpli_URL_dic[url]) +
-							"'>http://" + str(machine)+ ":" + str(port) + str(simpli_URL_dic[url]) + "</a>" +
-							"<br>Your original URL: <a href='" + str(origi_URL_dic[simpli_URL_dic[url]]) + "'>" + 
-							str(origi_URL_dic[simpli_URL_dic[url]]) + "</a></h4>")
+							"<h4>Your shortened URL: <a href='//" + str(machine) + ":" + str(port) + str(self.simpli_URL_dic[url]) +
+							"'>http://" + str(machine)+ ":" + str(port) + str(self.simpli_URL_dic[url]) + "</a>" +
+							"<br>Your original URL: <a href='" + str(self.origi_URL_dic[self.simpli_URL_dic[url]]) + "'>" + 
+							str(self.origi_URL_dic[self.simpli_URL_dic[url]]) + "</a></h4>")
 					response = send_response('200', links)
 			else:
 				response = send_response('501', "<center>Service not implemented on this server.</center>")
 		
 		"""Returns the HTTP code for the reply, and an HTML page."""
-		print(origi_URL_dic, simpli_URL_dic)
+		print(self.origi_URL_dic, self.simpli_URL_dic)
 		return response
 
 if __name__ == "__main__":
