@@ -141,11 +141,11 @@ class practice1App(webapp.webApp):
                         self.simpli_URL_dic[url] = ("/" + str(len(self.origi_URL_dic) - 1))
                         write_data(FILE_NAME, self.origi_URL_dic)
 
-                    links = ("<h2><font color='darkslategray'>Choose one:</font></h2>" +
-                            "<h4>Your shortened URL: <a href='//" + str(machine) + ":" + str(port) + str(self.simpli_URL_dic[url]) +
-                                "'>http://" + str(machine) + ":" + str(port) + str(self.simpli_URL_dic[url]) + "</a>" +
-                                "<br>Your original URL: <a href='" + str(self.origi_URL_dic[self.simpli_URL_dic[url]]) + "'>" +
-                                str(self.origi_URL_dic[self.simpli_URL_dic[url]]) + "</a></h4>")
+                    links = ("<h2><font color='darkslategray'>Choose one:</font></h2>" 
+                                + "<h4>Your shortened URL: <a href='//" + str(machine) + ":" + str(port) + str(self.simpli_URL_dic[url]) 
+                                + "'>http://" + str(machine) + ":" + str(port) + str(self.simpli_URL_dic[url]) + "</a>" 
+                                + "<br>Your original URL: <a href='" + str(self.origi_URL_dic[self.simpli_URL_dic[url]]) + "'>" 
+                                + str(self.origi_URL_dic[self.simpli_URL_dic[url]]) + "</a></h4>")
                     response = send_response('200', links)
             else:
                 response = send_response('501', "<center>Service not implemented on this server.</center>")
