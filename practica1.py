@@ -70,7 +70,7 @@ form = """
 
 
 Codes = {'200': 'OK', '404': 'Not Found',
-		'302': 'Found', '501': 'Not Implemented'}
+			'302': 'Found', '501': 'Not Implemented'}
 
 
 def send_response(Code, Body):
