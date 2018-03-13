@@ -17,6 +17,7 @@ machine = "localhost"
 origi_URL_dic = {}
 simpli_URL_dic = {}
 
+
 def read_data(file):
 	dates = None
 	try:
