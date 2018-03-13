@@ -35,7 +35,7 @@ def read_data(file):
 
 def update_dictionary(opt, text):
 	dictionary = {}
-	if text != None:
+	if text is not None:
 		for lines in text:
 			dirty_key, dirty_value = lines.split(": ")
 			key = dirty_key.split("'")[1]
