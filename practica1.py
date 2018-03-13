@@ -19,7 +19,7 @@ simpli_URL_dic = {}
 
 
 def read_data(file):
-	dates = None
+    dates = None
     try:
 		with open(file, newline='') as csvfile:
 			lines = csv.reader(csvfile, delimiter=' ', quotechar='|')
