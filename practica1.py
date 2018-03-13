@@ -32,6 +32,7 @@ def read_data(file):
 	csvfile.close()
 	return dates
 
+
 def update_dictionary(opt, text):
 	dictionary = {}
 	if text != None:
@@ -45,12 +46,14 @@ def update_dictionary(opt, text):
 				value = aux 
 			dictionary[key] = value
 	return dictionary
-	
+
+
 def write_data(file, dic):
 	f = open(file, 'w')
 	data = csv.writer(f, delimiter=' ', quotechar='|', quoting=csv.QUOTE_MINIMAL) 
 	data.writerow([dic])
 	f.close()
+
 
 def router(url):
 	return ("<html>" + PRACTICE_NAME + "<head><META HTTP-EQUIV='REFRESH' CONTENT='5;URL=" + str(url) + "'>" +
