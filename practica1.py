@@ -78,7 +78,7 @@ def send_response(Code, Body):
 
 
 class practice1App(webapp.webApp):
-	
+
 	def __init__(self, hostname, port):
 		try:
 			old_dic = read_data(FILE_NAME)
