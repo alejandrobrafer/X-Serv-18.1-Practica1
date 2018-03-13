@@ -21,16 +21,16 @@ simpli_URL_dic = {}
 def read_data(file):
     dates = None
     try:
-		with open(file, newline='') as csvfile:
-			lines = csv.reader(csvfile, delimiter=' ', quotechar='|')
-			for line in lines:
-				text = (', '.join(line))
-			dates = text[1:-1].split(', ')
-	# Case: the file doesn't exist
-	except IOError:
-		csvfile = open(file, "wb")
-	csvfile.close()
-	return dates
+        with open(file, newline='') as csvfile:
+            lines = csv.reader(csvfile, delimiter=' ', quotechar='|')
+            for line in lines:
+                text = (', '.join(line))
+            dates = text[1:-1].split(', ')
+    # Case: the file doesn't exist
+    except IOError:
+        csvfile = open(file, "wb")
+    csvfile.close()
+    return dates
 
 
 def update_dictionary(opt, text):
