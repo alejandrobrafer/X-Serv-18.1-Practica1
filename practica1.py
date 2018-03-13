@@ -137,7 +137,7 @@ class practice1App(webapp.webApp):
 						# Note: I have considered that a URL with 'http://' is different that a URL with 'https://'
 					
 					# I search if the URL isn't in the dictionary
-					if not url in self.simpli_URL_dic:
+					if url not in self.simpli_URL_dic:
 						self.origi_URL_dic["/" + str(len(self.origi_URL_dic))] = url
 						self.simpli_URL_dic[url] = ("/" + str(len(self.origi_URL_dic) - 1))
 						write_data(FILE_NAME, self.origi_URL_dic)	
