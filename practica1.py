@@ -68,11 +68,14 @@ form = """
 <b><i>List of original and shortened URLs at this time:</i></b>
 """
 
+
 Codes = {'200': 'OK', '404': 'Not Found', 
 		'302': 'Found', '501': 'Not Implemented'}
 
+
 def send_response(Code, Body):
 	return (Code + " " + Codes[Code], "<html>" + PRACTICE_NAME + "<body><h1>" + Body + "</h1></body></html>")
+
 
 class practice1App(webapp.webApp):
 	
