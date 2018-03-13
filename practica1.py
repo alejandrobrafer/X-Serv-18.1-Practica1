@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 """
-Práctica 1: Objetivo la creación de una aplicación web simple para
-acortar URLs.
+Práctica 1: Objetivo la creación de una aplicación web simple para acortar URLs.
 """
 
 import webapp
