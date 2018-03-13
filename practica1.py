@@ -88,7 +88,7 @@ class practice1App(webapp.webApp):
 		self.origi_URL_dic = update_dictionary(None, old_dic)
 		self.simpli_URL_dic = update_dictionary("Actived", old_dic)
 		super().__init__(hostname, port)
-	
+
 	def parse(self, request):
 		"""Parse the received request, extracting the relevant information."""
 		# request.split()[0] == metodo (GET, POST...)
@@ -110,16 +110,16 @@ class practice1App(webapp.webApp):
 
 			if method == 'GET' and resource == '/':
 				response = send_response('200', form + str(self.origi_URL_dic))
-			
+
 			elif method == 'GET':
 				num = resource.split('/')[1]
 				key = "/" + num
-				
+
 				if key in self.origi_URL_dic:
 					response = ('302 Found', router(self.origi_URL_dic[key]))
 				else:
 					response = send_response('404', "<center>Resource Not Found!</center>")
-				
+
 			elif method == 'POST' and resource == '/':
 				body = petition.split('\r\n\r\n', 1)[1]
 				headers = petition.split('\r\n\r\n', 1)[0]
@@ -135,7 +135,7 @@ class practice1App(webapp.webApp):
 					if url.find('http://', 0, 7) == -1 and url.find('https://', 0, 8) == -1:
 						url = PREFIX + url
 						# Note: I have considered that a URL with 'http://' is different that a URL with 'https://'
-					
+
 					# I search if the URL isn't in the dictionary
 					if url not in self.simpli_URL_dic:
 						self.origi_URL_dic["/" + str(len(self.origi_URL_dic))] = url
@@ -150,7 +150,7 @@ class practice1App(webapp.webApp):
 					response = send_response('200', links)
 			else:
 				response = send_response('501', "<center>Service not implemented on this server.</center>")
-		
+
 		"""Returns the HTTP code for the reply, and an HTML page."""
 		print(self.origi_URL_dic, self.simpli_URL_dic)
 		return response
