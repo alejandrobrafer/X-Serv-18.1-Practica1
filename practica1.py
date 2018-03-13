@@ -57,7 +57,7 @@ def write_data(file, dic):
 
 def router(url):
 	return ("<html>" + PRACTICE_NAME + "<head><META HTTP-EQUIV='REFRESH' CONTENT='5;URL=" + str(url) + "'>" +
-		"</head><body>Redirecting in 5 seconds ...</body></html>")
+					"</head><body>Redirecting in 5 seconds ...</body></html>")
 
 form = """
 <h1><font color="darkslategray"><center><u>URL shortener ~ SARO 2018</u></center></font></h1>
@@ -69,8 +69,7 @@ form = """
 """
 
 
-Codes = {'200': 'OK', '404': 'Not Found',
-	'302': 'Found', '501': 'Not Implemented'}
+Codes = {'200': 'OK', '404': 'Not Found', '302': 'Found', '501': 'Not Implemented'}
 
 
 def send_response(Code, Body):
