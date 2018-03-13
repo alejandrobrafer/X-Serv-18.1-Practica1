@@ -73,8 +73,8 @@ Codes = {'200': 'OK', '404': 'Not Found', '302': 'Found', '501': 'Not Implemente
 
 
 def send_response(Code, Body):
-    return (Code + " " + Codes[Code], "<html>" + PRACTICE_NAME + 
-                "<body><h1>" + Body + "</h1></body></html>")
+    return (Code + " " + Codes[Code], "<html>" + PRACTICE_NAME +
+            "<body><h1>" + Body + "</h1></body></html>")
 
 
 class practice1App(webapp.webApp):
@@ -134,7 +134,7 @@ class practice1App(webapp.webApp):
                     # Case: If URL hasn't prefix 'http://' or 'https://'
                     if url.find('http://', 0, 7) == -1 and url.find('https://', 0, 8) == -1:
                         url = PREFIX + url
-                        # Note: I have considered that a URL with 'http://' 
+                        # Note: I have considered that a URL with 'http://'
                         # is different that a URL with 'https://'
 
                     # I search if the URL isn't in the dictionary
